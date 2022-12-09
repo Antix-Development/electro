@@ -22,6 +22,12 @@ If you end up using Electro, let me know, I would love to see what you do with i
 
 <hr>
 
+### Applications Made Using Electro
+
+[AtlasApp](https://github.com/Antix-Development/atlasapp)
+
+<hr>
+
 ### Strengths and Weaknesses
 
 As with all things in life, nothing is perfect, and Electro is no different in that regard.
