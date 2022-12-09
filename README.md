@@ -429,8 +429,6 @@ https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowse
 https://www.electronjs.org/docs/latest/api/structures/file-filter
 https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowserwindow-options
 
-> *NOTE:* You can also pass
-
 <br>
 
 `showSaveFileDialog(options)`
