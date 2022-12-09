@@ -12,6 +12,8 @@ MIT License:
 
 ### About
 
+> *NOTE: Currently does not run when built as an executable, working on that.
+
 Electro is a single page ElectronJS application template primarily for Windows OS that attempts to mimic the functionality and behavior of a real window, with an appearance similar to that of Visual Studio Code. The reason it exists is to serve as a minimal single page ElectronJS based template for my personal use, and I have made it publicly available on the off chance that somebody else might find it of use, be that practical or educational.
 
 Electro adheres to a standard model for a secure ElectronJS application, having a main process managing Electron tasks, a renderer process containing the main application logic, and a preload process which facilitates inter-process communication between them.
