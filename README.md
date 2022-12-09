@@ -93,20 +93,11 @@ electro.setMenus(myMenus);
 
 // Define some colors and set them
 const myColors = {
-  title_background:   '444', // Title bar background color, inherited by all children
   title_label:        'bbb', // Title bar title color
-  highlight:          '555', // Highlight (hover) color for title bar elements except window close button
   menu_label:         'bbb', // Menu label color
   item_label:         'eee', // Menu item label color
   item_highlight:     '046', // Menu item highlight (hover) color
   separator:          '666', // Menu separator bar color
-  close_highlight:    'd12', // Highlight (hover) color for window close button
-  notify_background:  '222', // Notification background color
-  notify_text:        'bbb', // Notification text color
-  dialog_background:  '222', // Dialog background color
-  dialog_yes:         '16a', // Dialog yes button color
-  dialog_no:          '444', // Dialog no button color
-  dialog_text:        'bbb', // Dialog text color
 };
 electro.setColors(myColors);
 
@@ -405,6 +396,7 @@ Electro provides a number methods to enable selection of file and folders from t
 ```
 
 https://www.electronjs.org/docs/latest/api/structures/file-filter
+
 https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowserwindow-options
 
 <br>
@@ -427,6 +419,7 @@ https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowse
 ```
 
 https://www.electronjs.org/docs/latest/api/structures/file-filter
+
 https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowserwindow-options
 
 <br>
@@ -449,6 +442,7 @@ https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowse
 ```
 
 https://www.electronjs.org/docs/latest/api/structures/file-filter
+
 https://www.electronjs.org/docs/latest/api/dialog#dialogshowsavedialogsyncbrowserwindow-options
 
 ---
@@ -513,6 +507,7 @@ Calling `currentDirectory` with no parameter will result in the current director
 Calling `currentdirectory` with a path will cause the current directory to be changed (set).
 
 https://nodejs.org/api/process.html#processcwd
+
 https://nodejs.org/api/process.html#process_process_chdir_directory
 
 <br>
