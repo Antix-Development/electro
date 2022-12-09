@@ -1,0 +1,12 @@
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# Archives
+.zip
+
+dist/
+out/
