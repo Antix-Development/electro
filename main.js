@@ -31,19 +31,19 @@ app.on('ready', () => {
       label: 'Tools',
       submenu: [
 
-        {
-          label: 'Reload Page',
-          role: 'reload',
-          accelerator: 'F5',
-        },
+        // {
+        //   label: 'Reload Page',
+        //   role: 'reload',
+        //   accelerator: 'F5',
+        // },
 
-        {
-          label: 'Dev Tools',
-          accelerator: 'F12',
-          click() {
-            mainWindow.toggleDevTools();
-          }
-        },
+        // {
+        //   label: 'Dev Tools',
+        //   accelerator: 'F12',
+        //   click() {
+        //     mainWindow.toggleDevTools();
+        //   }
+        // },
 
         {
           label: 'Toggle FullSceen',
