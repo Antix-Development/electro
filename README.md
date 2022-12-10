@@ -28,6 +28,22 @@ If you end up using Electro, let me know, I would love to see what you do with i
 
 <hr>
 
+### What's New?
+
+v1.0.1 (11 Dec 2022)
+
+- Added `getAppInfo()` which gets the applications "package.json" file as an object.
+- Cursor now changes to a pointer when the pointer is hovering over a dialog button.
+- Added collapsable history to readme.
+
+<details><summary>v1.0.0 (9 Dec 2022)</summary><p>
+
+- Initial public release
+
+</p></details>
+
+<hr>
+
 ### Strengths and Weaknesses
 
 As with all things in life, nothing is perfect, and Electro is no different in that regard.
@@ -189,6 +205,18 @@ electro.initialize({
 When config is enabled, Electro will persist its window dimensions and position between sessions.
 
 > *NOTE:* Electro will NOT save window dimensions and position if the window is minimized or in fullscreen mode.
+
+<br>
+
+`getAppInfo()`
+
+@returns {object} info or null
+
+*Get application information.*
+
+The applications *'package.json'* file will be returned as an object. This is useful if you want to display information about the app such as the name, version, author, etc, which are all contained inside the *'package.json'* file.
+
+> *NOTE:* `getAppInfo()` returns the entire `package.json` object.
 
 <br>
 

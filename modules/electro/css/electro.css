@@ -249,6 +249,7 @@ MIT License:
 }
 .dialog-button:hover {
   filter: brightness(125%);
+  cursor: pointer;
 }
 #dialog-yes-button {
   background-color: var(--dialog-yes-button-color);

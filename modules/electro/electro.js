@@ -33,6 +33,10 @@ currentDir, // Current directory retrieved from nodeJS `process.cwd()`
 
 electroDirectory, // Folder where Electro lives
 
+resourceDirectory, // Folder where resources can be found
+
+appInfo, // Information about the app
+
 resizeCallback;
 
 const 
@@ -114,14 +118,14 @@ initialize = (options = {}) => {
 
   currentDir = currentDirectory(); // Get the current directory
 
-  if (electronAPI.exists(newFileName(currentDir, 'resources', 'app'))) {
-    // Use production path
-    electroDirectory = newFileName(currentDir, 'resources', 'app', 'modules', 'electro');
+  // Determine correct path to resources because when packaged and distributed it will no longer be the root folder
+  const productionDir = newFileName(currentDir, 'resources', 'app');
+  resourceDirectory = (electronAPI.exists(productionDir)) ? productionDir : currentDir; // Path to resources
+  electroDirectory = newFileName(resourceDirectory, 'modules', 'electro'); // Electro resources path
 
-  } else {
-    // Use dev path
-    electroDirectory = newFileName(currentDir, 'modules', 'electro');
-  }
+  // Cache 'package.json' as an object
+  const packageFileName = newFileName(resourceDirectory, 'package.json')
+  if (electronAPI.exists(packageFileName)) appInfo = JSON.parse(electronAPI.loadTextFile(packageFileName));
 
   loadStyleSheet(newFileName(electroDirectory, 'css', 'electro.css'));
 
@@ -668,6 +672,9 @@ quitApplication = () => (electronAPI.quitApplication()),
 
 launchURL = (url) => (electronAPI.launchURL(url)),
 
+// Return package.json as an object
+getAppInfo = () => (appInfo),
+
 // 
 // Native Dialogs
 // 
@@ -714,6 +721,7 @@ export {
   quitApplication,
   enableConfig,
   launchURL,
+  getAppInfo,
 
   newHotkey,
   setResizeCallback,
@@ -737,7 +745,7 @@ export {
   fileInfo,
   currentDirectory,
   newFileName,
-
+  
   loadTextFile,
   saveTextFile,
   saveBinaryFile,
