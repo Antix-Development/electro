@@ -65,7 +65,7 @@ If you are using Visual Studio Code then then getting started is fairly straight
 2. Unzip downloaded file into your projects folder.
 3. Rename the folder to whatever your application will be called.
 4. Open the folder in VSCode.
-5. Run `npm init`.
+5. Run `npm install`.
 
 From there you can start creating your application by editing `index.html`, `renderer.js`, and `style.css`.
 
