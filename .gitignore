@@ -1,12 +1,8 @@
-# Logs
 logs
 *.log
 
-# Dependency directories
 node_modules/
-
-# Archives
-.zip
-
+*.zip
 dist/
 out/
+work/

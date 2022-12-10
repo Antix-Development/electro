@@ -114,8 +114,15 @@ initialize = (options = {}) => {
 
   currentDir = currentDirectory(); // Get the current directory
 
-  electroDirectory = newFileName(currentDir, 'modules', 'electro'); // Create for internal use
-  
+  if (electronAPI.exists(newFileName(currentDir, 'resources', 'app'))) {
+    // Use production path
+    electroDirectory = newFileName(currentDir, 'resources', 'app', 'modules', 'electro');
+
+  } else {
+    // Use dev path
+    electroDirectory = newFileName(currentDir, 'modules', 'electro');
+  }
+
   loadStyleSheet(newFileName(electroDirectory, 'css', 'electro.css'));
 
   // create title bar div and insert at head of document body
