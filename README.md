@@ -71,7 +71,9 @@ From there you can start creating your application by editing `index.html`, `ren
 
 > *NOTE:* Your mileage may vary for other IDE's.
 
-> *NOTE:* Electro is pre configured with two launch configurations, *"Run Electron Main"*, and *"Debug Electron Main"*. Electro is also setup to build using Electron-Forge.
+> *NOTE:* Electro is pre configured with two launch configurations, *"Run Electron Main"*, and *"Debug Electron Main"*.
+
+> *NOTE: Electro uses Electron Forge to package and create a zip file for portable distributions.
 
 The following example shows how to use the core features of Electro and hopefully demonstrates how easy it is to use...
 
