@@ -419,6 +419,7 @@ Electro provides a number methods to enable selection of file and folders from t
 *Show an open file dialog where only one file can be selected.*
 
 @param {object} options
+
 @returns {string} filename, or null
 
 `options` is an object containing any of the following optional parameters...
@@ -442,6 +443,8 @@ https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowse
 *Show an open file dialog where multiple files can be selected.*
 
 @param {object} options
+
+
 @returns {[string]} Array of filenames, or null
 
 `options` is an object containing any of the following optional parameters...
@@ -465,6 +468,7 @@ https://www.electronjs.org/docs/latest/api/dialog#dialogshowopendialogsyncbrowse
 *Show a save file dialog where one file can be entered.*
 
 @param {object} options
+
 @returns {string} filename, or null
 
 `options` is an object containing any of the following optional parameters...
