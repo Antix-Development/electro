@@ -363,7 +363,7 @@ initialize = (options = {}) => {
       showElement(titleBarButtonsDiv); // Show buttons on un-fullscreen
     }
 
-    if (resizeCallback) resizeCallback(type); // Execute callback
+    if (resizeCallback) resizeCallback(type, getWindowBounds()); // Execute callback
   });
 
 },
@@ -672,8 +672,23 @@ quitApplication = () => (electronAPI.quitApplication()),
 
 launchURL = (url) => (electronAPI.launchURL(url)),
 
-// Return package.json as an object
-getAppInfo = () => (appInfo),
+getAppInfo = () => (appInfo), // Return package.json as an object
+
+getScreenBounds = () => ({x: 0, y: 0, width: window.screen.width * window.devicePixelRatio, height: window.screen.height * window.devicePixelRatio}), 
+
+getWindowBounds = () => {
+  const clamp = (v, min, max) => (v < min ? min : v > max ? max : v),
+  bounds = electronAPI.getWindowBounds(),
+  screenWidth = window.screen.width * window.devicePixelRatio,
+  screenHeight = window.screen.height * window.devicePixelRatio;
+
+  return {
+    x: clamp(bounds.x, 0, screenWidth),
+    y: clamp(bounds.y, 0, screenHeight),
+    width: clamp(bounds.width, 0, screenWidth),
+    height:clamp(bounds.height, 0, screenHeight),
+  };
+}, 
 
 // 
 // Native Dialogs
@@ -721,6 +736,8 @@ export {
   quitApplication,
   enableConfig,
   launchURL,
+  getWindowBounds,
+  getScreenBounds,
   getAppInfo,
 
   newHotkey,
@@ -745,7 +762,7 @@ export {
   fileInfo,
   currentDirectory,
   newFileName,
-  
+
   loadTextFile,
   saveTextFile,
   saveBinaryFile,

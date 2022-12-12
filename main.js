@@ -123,6 +123,8 @@ app.on('ready', () => {
     mainWindow.webContents.send('resized', 'unmaximized');
   });
 
+  mainWindow.on('resized', () => mainWindow.webContents.send('resized', 'resized'));
+
 }); // End application ready handler
 
 // 
@@ -135,6 +137,9 @@ ipcMain.on('launchURL', (e, url) => {
   shell.openExternal(url); // Open the given URL in the systems default browser
   e.returnValue = true;
 });
+
+ipcMain.on('getBounds', (e) => e.returnValue = mainWindow.getBounds());
+
 
 // 
 // User interface

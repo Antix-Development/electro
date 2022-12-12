@@ -30,11 +30,20 @@ If you end up using Electro, let me know, I would love to see what you do with i
 
 ### What's New?
 
-v1.0.1 (11 Dec 2022)
+v1.0.2 (12 Dec 2022)
+
+- Added `getWindowBounds()` so you can get the corrected bounds of the `BrowserWindow`.
+- Added `getScreenBounds()` so you can get the corrected bounds of the screen.
+- Window resize callbacks will now receive an ElectronJS rectangle describing the bounds of the window, as returned by `getWindowBounds()`.
+- Added 'resized' window resize type for normal window resizing when dragging its borders.
+
+<details><summary>v1.0.1 (11 Dec 2022)</summary><p>
 
 - Added `getAppInfo()` which gets the applications "package.json" file as an object.
 - Cursor now changes to a pointer when the pointer is hovering over a dialog button.
 - Added collapsable history to readme.
+
+</p></details>
 
 <details><summary>v1.0.0 (9 Dec 2022)</summary><p>
 
@@ -220,6 +229,50 @@ The applications *'package.json'* file will be returned as an object. This is us
 
 <br>
 
+`getWindowBounds()`
+
+@returns {object} bounds
+
+*Get window bounds.*
+
+bounds is an electron `Rectangle`...
+
+```
+{
+  x: 0,
+  y: 0,
+  width: 1920, 
+  height: 1080
+}
+```
+
+> *NOTE:* When resizing the Electron window, the window on the ipcRenderer process reports the wrong bounds. `getWindowBounds()` does give the correct bounds.
+
+https://www.electronjs.org/docs/latest/api/structures/rectangle
+
+<br>
+
+`getScreenBounds()`
+
+@returns {object} bounds
+
+*Get screen bounds.*
+
+bounds is an electron `Rectangle`...
+
+```
+{
+  x: 0,
+  y: 0,
+  width: 1920, 
+  height: 1080
+}
+```
+
+https://www.electronjs.org/docs/latest/api/structures/rectangle
+
+<br>
+
 `setMenus(menus)`
 
 *Set title bar menus using the given array of menu objects*
@@ -351,7 +404,10 @@ Once set, your callback function will be executed on an Electro window resize ev
 'unmaximized'
 'minimized'
 'restored'
+'resized' // A normal resize by dragging edges of window
 ```
+
+> *NOTE:* The callback will also be passed an ElectronJS `Rectangle` object describing the bounds of the window.
 
 > *NOTE:* You only need to set a callback if you need to do something when the Electro window resizes.
 
