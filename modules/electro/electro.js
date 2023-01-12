@@ -16,8 +16,8 @@ notifyText, // HTML SPAN containing the notify text
 notifyTimeoutID, // Setinterval ID
 
 inDialog, // True if a dialog is currently open
-dialogYesCallback, // Callback functions
-dialogNoCallback,
+dialogOnConfirm, // Callback functions
+dialogOnCancel,
 dialogVignette, // The full screen vignette that sits behind the dialog
 dialogContainer,
 dialogTitleContainer,
@@ -75,6 +75,14 @@ createElement = (type = 'div') => (document.createElement(type)),
  * @param {boolean} state
  */
 showElement = (el, state = true) => (state) ? el.style.display = 'inherit' : el.style.display = 'none',
+
+/** Set the position of the given element to the given left and top coordinates
+ * 
+ */
+positionElement = (el, left, top) => {
+  el.style.left = `${left}px`;
+  el.style.top = `${top}px`;
+},
 
 /** Load the CSS with the given name and attach it to the head of the document
  * @param {boolean} state
@@ -618,30 +626,46 @@ dialog = (options = {}) => {
   // Setup badge
   dialogBadge.src = newFileName(electroDirectory, 'img', `${dialogType}.svg`);
 
-  // Setup title and body
+  // Setup title
   (options.title) ? dialogTitle.innerHTML = options.title : dialogTitle.innerHTML = dialogType;
-  (options.body) ? dialogBody.innerHTML = options.body : dialogBody.innerHTML = '';
+
+  // Set body to given text or append given HTML element
+  dialogBody.innerHTML = ''
+  if (options.body) (typeof options.body === 'string') ? dialogBody.innerHTML = options.body : dialogBody.appendChild(options.body);
 
   // Setup yes button
   (options.yesText) ? dialogYesButton.innerHTML = options.yesText : dialogYesButton.innerHTML = 'YES';
-  (options.yesCallback) ? dialogYesCallback = options.yesCallback : dialogYesCallback = null;
+  (options.onConfirm) ? dialogOnConfirm = options.onConfirm : dialogOnConfirm = null;
 
   // Setup no button
   (options.noText) ? dialogNoButton.innerHTML = options.noText : dialogNoButton.innerHTML = 'NO';
-  (options.noCallback) ? dialogNoCallback = options.noCallback : dialogNoCallback = null;
+  (options.onCancel) ? dialogOnCancel = options.onCancel : dialogOnCancel = null;
 
   (options.singleButton) ? showElement(dialogNoButton, false) : dialogNoButton.style.display = 'inline-block';
 
   dialogSingleButtonMode = options.singleButton; // Stop "escape" key closing a single button dialog (only "enter" will close them)
   
-  // Override HTML link behaviors, causing all links inside the dialog's body to open in the default system browser, and not a new ElectronJS window instance
-  let links = dialogBody.getElementsByTagName('a');
-  for (let i = 0; i < links.length; i++) {
-    const link = links[i];
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      launchURL(link.href);
-    });
+  // Set position
+  if (options.center) {
+    dialogContainer.classList.add('dialog-center');
+
+  } else {
+    dialogContainer.classList.remove('dialog-center');
+    (options.left) ? dialogContainer.style.left = `${options.left}px` : dialogContainer.style.left = `64px`;
+    (options.top) ? dialogContainer.style.top = `${options.top}px` : dialogContainer.style.left = `64px`;
+  }
+
+  // Only gomf links if requested
+  if (!options.ignoreLinks) {
+    // Override HTML link behaviors, causing all links inside the dialog's body to open in the default system browser, and not a new ElectronJS window instance
+    let links = dialogBody.getElementsByTagName('a');
+    for (let i = 0; i < links.length; i++) {
+      const link = links[i];
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        launchURL(link.href);
+      });
+    }
   }
 
   dialogVignette.style.display = 'block';
@@ -652,15 +676,15 @@ dialog = (options = {}) => {
 closeDialog = (callback) => {
   dialogVignette.style.display = 'none';
   if (callback) callback();
-  dialogYesCallback = null;
+  dialogOnConfirm = null;
   inDialog = false;
 },
 
 // Dialog "no" button was clicked
-dialogNoButtonClicked = () => closeDialog(dialogNoCallback),
+dialogNoButtonClicked = () => closeDialog(dialogOnCancel),
 
 // Dialog "yes" button was clicked
-dialogYesButtonClicked = () => closeDialog(dialogYesCallback),
+dialogYesButtonClicked = () => closeDialog(dialogOnConfirm),
 
 // 
 // Electron functions follow
@@ -674,21 +698,9 @@ launchURL = (url) => (electronAPI.launchURL(url)),
 
 getAppInfo = () => (appInfo), // Return package.json as an object
 
-getScreenBounds = () => ({x: 0, y: 0, width: window.screen.width * window.devicePixelRatio, height: window.screen.height * window.devicePixelRatio}), 
+getScreenBounds = () => ({width: window.screen.width * window.devicePixelRatio, height: window.screen.height * window.devicePixelRatio}), 
 
-getWindowBounds = () => {
-  const clamp = (v, min, max) => (v < min ? min : v > max ? max : v),
-  bounds = electronAPI.getWindowBounds(),
-  screenWidth = window.screen.width * window.devicePixelRatio,
-  screenHeight = window.screen.height * window.devicePixelRatio;
-
-  return {
-    x: clamp(bounds.x, 0, screenWidth),
-    y: clamp(bounds.y, 0, screenHeight),
-    width: clamp(bounds.width, 0, screenWidth),
-    height:clamp(bounds.height, 0, screenHeight),
-  };
-}, 
+getWindowBounds = () => (electronAPI.getWindowBounds()),
 
 // 
 // Native Dialogs

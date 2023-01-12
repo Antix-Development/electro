@@ -214,6 +214,10 @@ MIT License:
   background-color: var(--dialog-background-color);
   color: var(--dialog-text-color);
 }
+.dialog-center {
+  top: 50%; right: 50%;
+  transform: translate(50%,-50%);
+}
 #dialog-title-bar {
   width: 100%;
   height: 36px;
@@ -228,7 +232,7 @@ MIT License:
   line-height: 36px;
 }
 #dialog-body {
-  max-width: 350px;
+  max-width: 480px;
   line-height: 26px;
   padding: 10px 8px;
 }
@@ -250,6 +254,9 @@ MIT License:
 .dialog-button:hover {
   filter: brightness(125%);
   cursor: pointer;
+}
+.dialog-button:active {
+  transform: scale(0.98);
 }
 #dialog-yes-button {
   background-color: var(--dialog-yes-button-color);

@@ -30,12 +30,23 @@ If you end up using Electro, let me know, I would love to see what you do with i
 
 ### What's New?
 
-v1.0.2 (12 Dec 2022)
+v2.0.0 (12 Jan 2023)
+
+- `dialog()` will now accept an HTML element in its options `body` property so extra content can be embedded inside.
+- Added `ignoreLinks` to dialog options so dialogs can be forced to not override default HTML anchor behavior.
+- Dialogs can now be positioned absolutley or centered in the window by passing options `left`, `top`, and `center` properties.
+- Dialog options `yesCallback` depricated, succeeded by `onConfirm`.
+- Dialog options `noCallback` depricated, succeeded by `onCancel`.
+- Tweaked various styles.
+
+<details><summary>v1.0.2 (12 Dec 2022)</summary><p>
 
 - Added `getWindowBounds()` so you can get the corrected bounds of the `BrowserWindow`.
 - Added `getScreenBounds()` so you can get the corrected bounds of the screen.
 - Window resize callbacks will now receive an ElectronJS rectangle describing the bounds of the window, as returned by `getWindowBounds()`.
 - Added 'resized' window resize type for normal window resizing when dragging its borders.
+
+</p></details>
 
 <details><summary>v1.0.1 (11 Dec 2022)</summary><p>
 
@@ -447,12 +458,18 @@ Valid options are as follows...
   body: 'One multiplied by five equals three', // Defaults to an empty string if not present
   type: electro.TYPE_INFORMATION, // defaults to `TYPE_INFORMATION` if not present
   yesText: 'True', // Defaults to "YES" if not present
-  yesCallback: () => console.log('stupid'), // Defaults to `null` if not present
+  onConfirm: () => console.log('stupid'), // Defaults to `null` if not present
   noText: 'False', // Defaults to "NO" if not present
-  noCallback: () => console.log('clever'), // Defaults to `null` if not present
-  singleButton: true // Only yes button will be visible, defaults to `false` if not present
+  onCancel: () => console.log('clever'), // Defaults to `null` if not present
+  singleButton: true, // Only yes button will be visible, defaults to `false` if not present
+  center: false, // If truem the dialog will be centered in the window
+  left: 64, // Absolute left position, defaults to 64 if not present
+  top: 64, // Absolute top position, defaults to 64 if not present
+  ignoreLinks: false, // do NOT override HTML anchor behavior, defaults to false if not present
 }
 ```
+
+> *NOTE:* If `options.body` is an HTML element, the dialogs body will be  the content of that element. Use `options.ignoreLinks` if you use HTML anchors as faux elements, otherwise you will get unexpected behavior when they are clicked.
 
 > *NOTE:* `dialog` uses the same types as `notify`...
 
@@ -596,7 +613,7 @@ https://nodejs.org/api/fs.html#fsmkdirsyncpath-options
 *Sets or gets the current directory.*
 
 @param {string} path default is null
-@return {string} current directory, or null if the current directory ws unable to be changed
+@return {string} current directory, or null if the current directory was unable to be changed
 
 Calling `currentDirectory` with no parameter will result in the current directory being returned (get).
 
